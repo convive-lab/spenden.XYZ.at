@@ -11,7 +11,7 @@ var fieldOffset = 4;
 var fontSize;
 var intervals = {0:"einmalig", 1:"pro Monat", 3:"pro Quartal", 6:"pro Halbjahr", 12:"pro Jahr"}
 var logo = new Image();
-logo.src = "./img/epicenter-logo.jpg";
+logo.src = "./img/subsubsub.jpg";
 
 
 // Scroll smoothly
@@ -135,12 +135,12 @@ function setPaymentAmount(amount) {
 	$("#credit-amount").attr("value", amount);
 	$("#eps-amount").attr("value", amount);
 
-	if(amount < 75)
+	if(false)
 		$("#button-debit").addClass("disabled");
-	else if($("#methods input[name='interval']:checked").val() == 0)
+	else if($("#methods input[name='interval']:checked").val() > 0)
 		$("#button-debit").removeClass("disabled");
 
-	if($("#methods input[name='interval']:checked").val() != 0 || amount >= 75) {
+	if($("#methods input[name='interval']:checked").val() != 0 ) {
 		$(".abovelimit").removeClass("hidden");
 		$(".belowlimit").addClass("hidden");
 	} else {
@@ -171,10 +171,10 @@ function setPaymentInterval(interval) {
 
 function selectedRepeat() {
 	// toggle Fördermitglied / Lastschrift
-	$(".lastschrift").addClass("hidden");
-	$(".foemi").removeClass("hidden");
+	//$(".lastschrift").addClass("hidden");
+	//$(".foemi").removeClass("hidden");
 
-	$(".abovelimit").removeClass("hidden");
+	//$(".abovelimit").removeClass("hidden");
 	$(".belowlimit").addClass("hidden");
 
 	// toggle paypal form
@@ -182,10 +182,10 @@ function selectedRepeat() {
 	$("#form-paypal-1").removeClass("hidden");
 
 	// enable supporter
-	$("#button-supporter").removeClass("disabled");
+	$("#button-supporter").addClass("disabled");
 
 	// disable debit
-	$("#button-debit").addClass("disabled");
+	//$("#button-debit").addClass("disabled");
 
 	// disable credit
 	$("#button-credit").addClass("disabled");
@@ -267,26 +267,21 @@ function genpdf() {
 	doc.setLineWidth(0.4);
 
 	offset += 20;
-	doc.addImage(logo, "JPEG", width - 240 - mrgnRight/2, offset, 240, 120);
+	doc.addImage(logo, "JPEG", width - 240 - mrgnRight/2, offset, 240, 240);
 	offset += 160;
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
-	text(doc, "epicenter.works - Plattform Grundrechtspolitik", 2);
-	text(doc, "Annagasse 8/1/8", 2);
-	text(doc, "1010 Wien", 2);
-	text(doc, "office@epicenter.works", 16);
+	text(doc, "Sub Graz", 2);
+	text(doc, "Kaiser-Franz-Josef-Kai 66", 2);
+	text(doc, "Graz", 2);
+	text(doc, "sub@catbull.com ", 16);
 
 	setFontSize(doc, 14);
 	doc.setFontType("bold");
-	var title = user.interval > 0 ? "Antrag auf Fördermitgliedschaft" : "Spenden per Bankeinzug";
+	var title = "Spenden per Bankeinzug";
 	text(doc, title, 12);
 
-	if (user.interval > 0) {
-		setFontSize(doc, 10);
-		doc.setFontType("bold");
-		block(doc, "Hiermit beantrage ich die Fördermitgliedschaft beim Verein epicenter.works - Plattform Grundrechtspolitik (hiernach: epicenter.works). Als außerordentliches Mitglied bin ich dazu eingeladen, mich aktiv in die Vereinsarbeit einzubringen und dadurch eine etwaige oder ordentliche Mitgliedschaft beim Verein zu erlangen.", 16);
-	}
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
@@ -298,11 +293,11 @@ function genpdf() {
 	setFontSize(doc, 10);
 	doc.setFontType("bold");
 	var addText = user.newsletter ? " Zusätzlich möchte ich den Newsletter abonnieren, um regelmäßig über die Tätigkeiten des Vereins informiert zu werden." : "";
-	block(doc, "Ich unterstütze epicenter.works " + intervals[user.interval] + " mit " + user.amount + " Euro." + addText, 18);
+	block(doc, "Ich unterstütze das Sub " + intervals[user.interval] + " mit " + user.amount + " Euro." + addText, 18);
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
-	fieldColumn(doc, date + ", ", "Datum, Ort", "", "Unterschrift", 16, true);
+	field(doc, date, "Datum", 10);
 
 	setFontSize(doc, 12);
 	doc.setFontType("bold");
@@ -310,18 +305,16 @@ function genpdf() {
 
 	setFontSize(doc, 10);
 	doc.setFontType("normal");
-	block(doc, "Ich ermächtige den Verein epicenter.works - Plattform Grundrechtspolitik (ZVR 140062668, Creditor ID: AT58ZZZ00000049332, hiernach: epicenter.works), Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von epicenter.works auf mein Konto gezogenen SEPA-Lastschriften einzulösen. Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Vor dem ersten Einzug einer SEPA-Basis-Lastschrift wird mich epicenter.works über den Einzug in dieser Verfahrensart unterrichten.", 16);
+	block(doc, "Ich ermächtige den Verein Kulturverein Comunikai (ZVR XYZ, Creditor ID: ATXYZ, Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von Kulturverein Comunikai auf mein Konto gezogenen SEPA-Lastschriften einzulösen. Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Vor dem ersten Einzug einer SEPA-Basis-Lastschrift wird mich Kulturverein Comunikai über den Einzug in dieser Verfahrensart unterrichten.", 16);
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
 	fieldColumn(doc, user.bank, "Kreditinstitut", user.bic, "BIC", 10);
 	field(doc, user.iban, "IBAN", 10);
-	fieldColumn(doc, date + ", ", "Datum, Ort", "", "Unterschrift", 16, true);
+	field(doc, date, "Datum", 10);
 
-	if (user.interval > 0)
-		doc.save("epicenter-antrag-auf-foerdermitgliedschaft.pdf");
-	else
-		doc.save("epicenter-spenden-per-bankeinzug.pdf");
+
+		doc.save("sub-Kulturverein-Comunikai-spenden-per-bankeinzug.pdf");
 
 	offset = 15;
 }
@@ -369,7 +362,7 @@ function fieldColumn(document, text1, description1, text2, description2, addOffs
 	offset += 3;
 	document.line(mrgnLeft, offset, mrgnLeft + columnWidth, offset);
 	document.line(mrgnLeft + columnWidth + columnSpace, offset, mrgnLeft + columnWidth + columnSpace + columnWidth, offset);
-	if(typeof highlight !== "undefined") {
+	if(false && typeof highlight !== "undefined") {
 		drawArrow(document, mrgnLeft + columnWidth + columnSpace + columnWidth, offset - fontSize / 2);
 	}
 	setFontSize(document, 8);
