@@ -267,7 +267,7 @@ function genpdf() {
 	doc.setLineWidth(0.4);
 
 	offset += 20;
-	doc.addImage(logo, "JPEG", width - 240 - mrgnRight/2, offset, 240, 120);
+	doc.addImage(logo, "JPEG", width - 240 - mrgnRight/2, offset, 240, 240);
 	offset += 160;
 
 	setFontSize(doc, 12);
@@ -297,7 +297,7 @@ function genpdf() {
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
-	fieldColumn(doc, date + ", ", "Datum, Ort", "", "Unterschrift", 16, true);
+	field(doc, date, "Datum", 10);
 
 	setFontSize(doc, 12);
 	doc.setFontType("bold");
@@ -311,7 +311,7 @@ function genpdf() {
 	doc.setFontType("normal");
 	fieldColumn(doc, user.bank, "Kreditinstitut", user.bic, "BIC", 10);
 	field(doc, user.iban, "IBAN", 10);
-	fieldColumn(doc, date + ", ", "Datum, Ort", "", "Unterschrift", 16, true);
+	field(doc, date, "Datum", 10);
 
 
 		doc.save("sub-Kulturverein-Comunikai-spenden-per-bankeinzug.pdf");
@@ -362,7 +362,7 @@ function fieldColumn(document, text1, description1, text2, description2, addOffs
 	offset += 3;
 	document.line(mrgnLeft, offset, mrgnLeft + columnWidth, offset);
 	document.line(mrgnLeft + columnWidth + columnSpace, offset, mrgnLeft + columnWidth + columnSpace + columnWidth, offset);
-	if(typeof highlight !== "undefined") {
+	if(false && typeof highlight !== "undefined") {
 		drawArrow(document, mrgnLeft + columnWidth + columnSpace + columnWidth, offset - fontSize / 2);
 	}
 	setFontSize(document, 8);
