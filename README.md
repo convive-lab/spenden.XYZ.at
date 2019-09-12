@@ -3,7 +3,7 @@ Dieses Repository beinhaltet die zukünftige Spendenseite des Mosaik-Blog. Diese
 
 # License
 spenden.epicenter.works
-Copyright (C) 2015-2017 epicenter.works
+Copyright (C) 2015-2018 epicenter.works
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
