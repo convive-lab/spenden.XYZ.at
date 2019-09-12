@@ -11,14 +11,14 @@ var fieldOffset = 4;
 var fontSize;
 var intervals = {0:"einmalig", 1:"pro Monat", 3:"pro Quartal", 6:"pro Halbjahr", 12:"pro Jahr"}
 var logo = new Image();
-logo.src = "./img/mosaik_logo.jpg";
+logo.src = "./img/epicenter-logo.jpg";
 
 
 // Scroll smoothly
 
 jQuery(document).ready(function () {
 	$("a[href*='#']:not([href='#'])").click(function() {
-		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')  || location.hostname == this.hostname) {
+		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') || location.hostname == this.hostname) {
 			var target = $(this.hash);
 			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
 			if (target.length) {
@@ -52,16 +52,6 @@ jQuery(document).ready(function () {
 		touchMove: false,
 		infinite: false
 	});
-
-	$("#supporters-box").slick({
-		arrows: true,
-		dots: true,
-		infinite: true,
-		centerMode: true,
-		variableWidth: true,
-		autoplay: true,
-		autoplaySpeed: 3000
-	});
 });
 
 // payment carousel triggers
@@ -77,6 +67,19 @@ function swipe(target) {
 
 function showMenu() {
 	$("#payment").slick("slickGoTo", 0);
+}
+
+// redirect to new page
+
+function redirect_supporter() {
+    amount = $("#paypal-1-amount").attr('value');
+    switch ($("#paypal-1-interval").attr('value')) {
+        case '1': interval = 'monthly'; break;
+        case '3': interval = 'quarterly'; break;
+        case '6': interval = 'biannually'; break;
+        case '12': interval = 'annually'; break;
+    }
+    window.location = 'https://support.epicenter.works/join?amount=' + amount + '&interval=' + interval;
 }
 
 // variable input field
@@ -130,19 +133,23 @@ function setPaymentAmount(amount) {
 	$("#paypal-1-amount").attr("value", amount);
 	$("#paypal-2-amount").attr("value", amount);
 	$("#credit-amount").attr("value", amount);
+	$("#eps-amount").attr("value", amount);
 
-	if(amount < 50)
+	if(amount < 75)
 		$("#button-debit").addClass("disabled");
 	else if($("#methods input[name='interval']:checked").val() == 0)
 		$("#button-debit").removeClass("disabled");
 
-	if($("#methods input[name='interval']:checked").val() != 0 || amount >= 50) {
+	if($("#methods input[name='interval']:checked").val() != 0 || amount >= 75) {
 		$(".abovelimit").removeClass("hidden");
 		$(".belowlimit").addClass("hidden");
 	} else {
 		$(".abovelimit").addClass("hidden");
 		$(".belowlimit").removeClass("hidden");
 	}
+
+	// Update height.
+	$("#payment").slick('setPosition');
 }
 
 // user selects different interval
@@ -155,6 +162,9 @@ function setPaymentInterval(interval) {
 		selectedRepeat();
 	else
 		selectedOnce();
+
+	// Update height.
+	$("#payment").slick('setPosition');
 }
 
 // user selects interval
@@ -179,6 +189,9 @@ function selectedRepeat() {
 
 	// disable credit
 	$("#button-credit").addClass("disabled");
+
+	// disable eps
+	$("#button-eps").addClass("disabled");
 }
 
 // user selects single payment
@@ -188,7 +201,7 @@ function selectedOnce() {
 	$(".foemi").addClass("hidden");
 	$(".lastschrift").removeClass("hidden");
 
-	if($("#methods input[name='amount']:checked").val() >= 50) {
+	if($("#methods input[name='amount']:checked").val() >= 75) {
 		$(".abovelimit").removeClass("hidden");
 		$(".belowlimit").addClass("hidden");
 	} else {
@@ -209,6 +222,9 @@ function selectedOnce() {
 
 	// enable credit
 	$("#button-credit").removeClass("disabled");
+
+	// enable eps
+	$("#button-eps").removeClass("disabled");
 }
 
 // Format IBAN input field
@@ -250,26 +266,26 @@ function genpdf() {
 	doc.setDrawColor(0, 0, 0);
 	doc.setLineWidth(0.4);
 
-    offset += 20;
-	doc.addImage(logo, "JPEG", width - 150 - mrgnRight/2, offset, 150, 33);
+	offset += 20;
+	doc.addImage(logo, "JPEG", width - 240 - mrgnRight/2, offset, 240, 120);
 	offset += 160;
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
-	text(doc, "Mosaik – Politik neu zusammensetzen", 2);
-	text(doc, "Gußhausstraße 14/3A", 2);
-	text(doc, "1040 Wien", 2);
-	text(doc, "spenden@mosaik-blog.at", 16);
+	text(doc, "epicenter.works - Plattform Grundrechtspolitik", 2);
+	text(doc, "Annagasse 8/1/8", 2);
+	text(doc, "1010 Wien", 2);
+	text(doc, "office@epicenter.works", 16);
 
 	setFontSize(doc, 14);
 	doc.setFontType("bold");
-	var title = user.interval > 0 ? "Regelmäßige Spende" : "Spenden per Bankeinzug";
+	var title = user.interval > 0 ? "Antrag auf Fördermitgliedschaft" : "Spenden per Bankeinzug";
 	text(doc, title, 12);
 
 	if (user.interval > 0) {
 		setFontSize(doc, 10);
 		doc.setFontType("bold");
-		block(doc, "Hiermit genehmige ich eine regelmäßige Spende an den Verein Mosaik – Politik neu zusammensetzen (hiernach: Mosaik).", 16);
+		block(doc, "Hiermit beantrage ich die Fördermitgliedschaft beim Verein epicenter.works - Plattform Grundrechtspolitik (hiernach: epicenter.works). Als außerordentliches Mitglied bin ich dazu eingeladen, mich aktiv in die Vereinsarbeit einzubringen und dadurch eine etwaige oder ordentliche Mitgliedschaft beim Verein zu erlangen.", 16);
 	}
 
 	setFontSize(doc, 12);
@@ -282,11 +298,11 @@ function genpdf() {
 	setFontSize(doc, 10);
 	doc.setFontType("bold");
 	var addText = user.newsletter ? " Zusätzlich möchte ich den Newsletter abonnieren, um regelmäßig über die Tätigkeiten des Vereins informiert zu werden." : "";
-	block(doc, "Ich unterstütze Mosaik – Politik neu zusammensetzen " + intervals[user.interval] + " mit " + user.amount + " Euro." + addText, 18);
+	block(doc, "Ich unterstütze epicenter.works " + intervals[user.interval] + " mit " + user.amount + " Euro." + addText, 18);
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
-	field(doc, date, "Datum", 10);
+	fieldColumn(doc, date + ", ", "Datum, Ort", "", "Unterschrift", 16, true);
 
 	setFontSize(doc, 12);
 	doc.setFontType("bold");
@@ -294,38 +310,18 @@ function genpdf() {
 
 	setFontSize(doc, 10);
 	doc.setFontType("normal");
-	block(doc, "Ich ermächtige den Verein Mosaik – Politik neu zusammensetzen (ZVR 969264600, Creditor ID: AT49ZZZ00000051046, hiernach: Mosaik), Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von Mosaik auf mein Konto gezogenen SEPA-Lastschriften einzulösen. Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Vor dem ersten Einzug einer SEPA-Basis-Lastschrift wird mich Mosaik über den Einzug in dieser Verfahrensart unterrichten.", 16);
+	block(doc, "Ich ermächtige den Verein epicenter.works - Plattform Grundrechtspolitik (ZVR 140062668, Creditor ID: AT58ZZZ00000049332, hiernach: epicenter.works), Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von epicenter.works auf mein Konto gezogenen SEPA-Lastschriften einzulösen. Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Vor dem ersten Einzug einer SEPA-Basis-Lastschrift wird mich epicenter.works über den Einzug in dieser Verfahrensart unterrichten.", 16);
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
 	fieldColumn(doc, user.bank, "Kreditinstitut", user.bic, "BIC", 10);
 	field(doc, user.iban, "IBAN", 10);
-	field(doc, date, "Datum", 10);
+	fieldColumn(doc, date + ", ", "Datum, Ort", "", "Unterschrift", 16, true);
 
-	$.post("send_mail.php", {
-		lastname: user.lastname,
-		firstname: user.firstname,
-		street: user.street,
-		number: user.number,
-		postcode: user.postcode,
-		residence: user.residence,
-		email: user.email,
-		newsletter: user.newsletter,
-		phone: user.phone,
-		bank: user.bank,
-		iban: user.iban,
-		bic: user.bic,
-		interval: user.interval,
-		amount: user.amount
-			}, function(data) {
-					alert (data);
-					});
-setTimeout(function(){
 	if (user.interval > 0)
-		doc.save("mosaik-regelmaessige-spende-per-bankeinzug.pdf");
+		doc.save("epicenter-antrag-auf-foerdermitgliedschaft.pdf");
 	else
-		doc.save("mosaik-spenden-per-bankeinzug.pdf");
-}, 2500);
+		doc.save("epicenter-spenden-per-bankeinzug.pdf");
 
 	offset = 15;
 }
