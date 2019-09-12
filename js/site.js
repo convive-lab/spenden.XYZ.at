@@ -11,7 +11,7 @@ var fieldOffset = 4;
 var fontSize;
 var intervals = {0:"einmalig", 1:"pro Monat", 3:"pro Quartal", 6:"pro Halbjahr", 12:"pro Jahr"}
 var logo = new Image();
-logo.src = "./img/epicenter-logo.jpg";
+logo.src = "./img/subsubsub.jpg";
 
 
 // Scroll smoothly
@@ -135,12 +135,12 @@ function setPaymentAmount(amount) {
 	$("#credit-amount").attr("value", amount);
 	$("#eps-amount").attr("value", amount);
 
-	if(amount < 75)
+	if(false)
 		$("#button-debit").addClass("disabled");
-	else if($("#methods input[name='interval']:checked").val() == 0)
+	else if($("#methods input[name='interval']:checked").val() > 0)
 		$("#button-debit").removeClass("disabled");
 
-	if($("#methods input[name='interval']:checked").val() != 0 || amount >= 75) {
+	if($("#methods input[name='interval']:checked").val() != 0 ) {
 		$(".abovelimit").removeClass("hidden");
 		$(".belowlimit").addClass("hidden");
 	} else {
@@ -171,10 +171,10 @@ function setPaymentInterval(interval) {
 
 function selectedRepeat() {
 	// toggle Fördermitglied / Lastschrift
-	$(".lastschrift").addClass("hidden");
-	$(".foemi").removeClass("hidden");
+	//$(".lastschrift").addClass("hidden");
+	//$(".foemi").removeClass("hidden");
 
-	$(".abovelimit").removeClass("hidden");
+	//$(".abovelimit").removeClass("hidden");
 	$(".belowlimit").addClass("hidden");
 
 	// toggle paypal form
@@ -182,10 +182,10 @@ function selectedRepeat() {
 	$("#form-paypal-1").removeClass("hidden");
 
 	// enable supporter
-	$("#button-supporter").removeClass("disabled");
+	$("#button-supporter").addClass("disabled");
 
 	// disable debit
-	$("#button-debit").addClass("disabled");
+	//$("#button-debit").addClass("disabled");
 
 	// disable credit
 	$("#button-credit").addClass("disabled");
