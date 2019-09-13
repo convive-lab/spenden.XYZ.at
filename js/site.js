@@ -11,7 +11,7 @@ var fieldOffset = 4;
 var fontSize;
 var intervals = {0:"einmalig", 1:"pro Monat", 3:"pro Quartal", 6:"pro Halbjahr", 12:"pro Jahr"}
 var logo = new Image();
-logo.src = "./img/subsubsub.jpg";
+logo.src = "./img/subsubsub2.jpg";
 
 
 // Scroll smoothly
@@ -267,7 +267,7 @@ function genpdf() {
 	doc.setLineWidth(0.4);
 
 	offset += 20;
-	doc.addImage(logo, "JPEG", width - 240 - mrgnRight/2, offset, 240, 240);
+	doc.addImage(logo, "JPEG", width - 468 - mrgnRight/2, offset, 417, 120);
 	offset += 160;
 
 	setFontSize(doc, 12);
