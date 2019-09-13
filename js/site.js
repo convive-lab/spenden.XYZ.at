@@ -272,7 +272,7 @@ function genpdf() {
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
-	text(doc, "Sub Graz", 2);
+	text(doc, "Kulturverein Comunikai", 2);
 	text(doc, "Kaiser-Franz-Josef-Kai 66", 2);
 	text(doc, "Graz", 2);
 	text(doc, "sub@catbull.com ", 16);
@@ -305,7 +305,7 @@ function genpdf() {
 
 	setFontSize(doc, 10);
 	doc.setFontType("normal");
-	block(doc, "Ich ermächtige den Verein Kulturverein Comunikai (ZVR XYZ, Creditor ID: ATXYZ, Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von Kulturverein Comunikai auf mein Konto gezogenen SEPA-Lastschriften einzulösen. Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Vor dem ersten Einzug einer SEPA-Basis-Lastschrift wird mich Kulturverein Comunikai über den Einzug in dieser Verfahrensart unterrichten.", 16);
+	block(doc, "Ich ermächtige den Verein Kulturverein Comunikai (ZVR 796748171, Creditor ID: ATXYZ, Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von Kulturverein Comunikai auf mein Konto gezogenen SEPA-Lastschriften einzulösen. Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Vor dem ersten Einzug einer SEPA-Basis-Lastschrift wird mich Kulturverein Comunikai über den Einzug in dieser Verfahrensart unterrichten.", 16);
 
 	setFontSize(doc, 12);
 	doc.setFontType("normal");
