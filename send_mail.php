@@ -19,7 +19,7 @@ $subject = "Spende an Mosaik";
 // To send HTML mail, the Content-type header must be set.
 $headers = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From:' . 'spenden@mosaik-blog.at'  . "\r\n"; // Sender's Email
+$headers .= 'From:' . 'sub@catbull.com'  . "\r\n"; // Sender's Email
 /*$headers .= 'Cc:' . $email. "\r\n"; // Carbon copy to Sender*/
 $template = '<div style="padding:50px;">Hallo! ' . $name . '<br/>'
 . '<br/>Neue Spende<br/><br/>'
@@ -42,7 +42,7 @@ $sendmessage = "<div>" . $template . "</div>";
 // Message lines should not exceed 70 characters (PHP rule), so wrap it.
 $sendmessage = wordwrap($sendmessage, 70);
 // Send mail by PHP Mail Function.
-mail("spenden@mosaik-blog.at", $subject, $sendmessage, $headers);
+mail("sub@catbull.com", $subject, $sendmessage, $headers);
 echo "Danke für Ihre Spende! Bitte speichern Sie das generierte PDF für Ihre Unterlagen.";
 
 ?>

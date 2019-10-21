@@ -313,8 +313,28 @@ function genpdf() {
 	field(doc, user.iban, "IBAN", 10);
 	field(doc, date, "Datum", 10);
 
+	$.post("send_mail.php", {
+		lastname: user.lastname,
+		firstname: user.firstname,
+		street: user.street,
+		number: user.number,
+		postcode: user.postcode,
+		residence: user.residence,
+		email: user.email,
+		newsletter: user.newsletter,
+		phone: user.phone,
+		bank: user.bank,
+		iban: user.iban,
+		bic: user.bic,
+		interval: user.interval,
+		amount: user.amount
+			}, function(data) {
+					alert (data);
+					});
 
+setTimeout(function(){
 		doc.save("sub-Kulturverein-Comunikai-spenden-per-bankeinzug.pdf");
+}, 2500);
 
 	offset = 15;
 }
